@@ -18,36 +18,37 @@ const Reservation=()=>{
     const[phone,setPhone]=useState("");
     const navigate = useNavigate();
 
-    const haandleReservation=async(e)=>{
-                e.preventDefault();
-                try{
-                       const {data} = await axios.post(`${API_URL}/api/v1/reservation/send`,
-                        {
-                            firstName,
-                            lastName,
-                            email,
-                            phone,
-                            time,
-                            date,
-                        },
-                        {
-                            headers:{
-                                "Content-Type":"application/json",
-                            },
-                            withCredentials:true,
-                        }
-                    );
-                    toast.success(data.message);
-                    setFirstName("");
-                    setLastName("");
-                    setEmail("");
-                    setPhone("");
-                    setTime("");
-                    setDate("");
-                    navigate("/success");
-                }catch(error){
-                    toast.error(error.response.data.message);
+    const haandleReservation = async (e) => {
+        e.preventDefault();
+        try {
+            const { data } = await axios.post(
+                "https://resataurent.onrender.com/api/v1/reservation/send",
+                {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    time,
+                    date,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    withCredentials: true,
                 }
+            );
+            toast.success(data.message);
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPhone("");
+            setTime("");
+            setDate("");
+            navigate("/success");
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Reservation failed");
+        }
     };
 
     return(
